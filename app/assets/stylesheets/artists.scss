@@ -124,3 +124,15 @@
 .artist-chart-columns {
   margin-bottom: 0;
 }
+
+.weekly-artists-container {
+  position: relative;
+}
+
+.date-picker-container {
+  position: absolute;
+  right: 0;
+  z-index: 99;
+  background-color: $white;
+  top: 1.3em;
+}

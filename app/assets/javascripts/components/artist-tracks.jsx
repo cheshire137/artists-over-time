@@ -22,7 +22,6 @@ class ArtistTracks extends React.Component {
   }
 
   onTracksLoaded(tracks) {
-    console.log(tracks)
     this.setState({ tracks })
   }
 

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
+import DayPicker from 'react-day-picker'
 
 import AppApi from '../models/app-api'
 
@@ -50,7 +50,8 @@ class WeeklyArtistsChart extends React.Component {
       toDate,
       fromDate: WeeklyArtistsChart.addDaysToDate(toDate, -7),
       percentCutoff: 2,
-      showControls: false
+      showControls: false,
+      showDatePicker: false
     }
   }
 
@@ -122,25 +123,40 @@ class WeeklyArtistsChart extends React.Component {
     return this.state[`showArtist${artist.mbid}`]
   }
 
+  onDateChange(date, opts) {
+    const dateStr = WeeklyArtistsChart.dateToURLParam(date)
+    window.location.href = `${this.props.baseUrl}/${dateStr}`
+  }
+
   toggleArtistTracks(event, artist) {
     event.preventDefault()
     event.target.blur()
     this.setState({ [`showArtist${artist.mbid}`]: !this.areArtistTracksShown(artist) })
   }
 
+  toggleDatePicker(event) {
+    event.preventDefault()
+    event.target.blur()
+    this.setState({ showDatePicker: !this.state.showDatePicker })
+  }
+
   render() {
     const { artists, fromDate, toDate, percentCutoff,
-            allArtists, showControls } = this.state
+            allArtists, showControls, showDatePicker } = this.state
 
     if (!artists) {
       return <p>Loading...</p>
     }
 
     return (
-      <div className="content">
+      <div className="content weekly-artists-container">
         <h4 className="subtitle is-6 pull-right">
           {this.previousDateLink()}
-          {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
+          <button
+            type="button"
+            className="button is-link"
+            onClick={e => this.toggleDatePicker(e)}
+          >{fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}</button>
           {this.nextDateLink()}
         </h4>
         <h3 className="artists-chart-title subtitle is-4">
@@ -156,6 +172,15 @@ class WeeklyArtistsChart extends React.Component {
             <span>{artists.length} / {allArtists.length} artist{allArtists.length === 1 ? '' : 's'}</span>
           </button>
         </h4>
+        {showDatePicker ? (
+          <div className="date-picker-container">
+            <DayPicker
+              initialMonth={toDate}
+              selectedDays={toDate}
+              onDayClick={(day, opts) => this.onDateChange(day, opts)}
+            />
+          </div>
+        ) : ''}
         {showControls ? (
           <ChartControls
             percentCutoff={percentCutoff}
