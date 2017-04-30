@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   scope defaults: { format: :json }, path: '/api' do
     get '/user' => 'users#current', as: :current_user
     get '/lastfm/weekly-artists' => 'lastfm#weekly_artists', as: :lastfm_weekly_artists
+    get '/lastfm/artist-tracks' => 'lastfm#artist_tracks', as: :lastfm_artist_tracks
   end
 
   root to: 'home#index'

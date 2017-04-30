@@ -1,16 +1,40 @@
 class LastfmController < ApplicationController
-  def weekly_artists
-    required_params = [params[:user], params[:from], params[:to]]
-    unless required_params.all?(&:present?)
-      return head :bad_request
-    end
+  before_filter :require_from
+  before_filter :require_to
+  before_filter :require_user
+
+  def artist_tracks
+    return head :bad_request unless params[:artist].present?
 
     api = LastfmApi.new
-    artists = api.weekly_artists(params[:user], from: params[:from],
+    user = params[:user] || current_user.username
+    tracks = api.artist_tracks(params[:artist], user: user,
+                               from: params[:from], to: params[:to])
+
+    return head api.response_code unless tracks
+
+    render json: tracks
+  end
+
+  def weekly_artists
+    return head :bad_request unless params[:from].present?
+    return head :bad_request unless params[:to].present?
+
+    api = LastfmApi.new
+    user = params[:user] || current_user.username
+    artists = api.weekly_artists(user, from: params[:from],
                                  to: params[:to])
 
     return head api.response_code unless artists
 
     render json: artists
+  end
+
+  private
+
+  def require_user
+    unless user_signed_in?
+      head :bad_request unless params[:user].present?
+    end
   end
 end

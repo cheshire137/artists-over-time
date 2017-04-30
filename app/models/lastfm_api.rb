@@ -3,6 +3,19 @@ class LastfmApi < Fetcher
     super('https://ws.audioscrobbler.com/2.0/', nil)
   end
 
+  # http://www.last.fm/api/show/user.getArtistTracks
+  def artist_tracks(artist, user:, from: nil, to: nil)
+    path = get_path(method: 'user.getartisttracks', user: user) +
+      "&artist=#{escape(artist)}"
+    path += "&startTimestamp=#{from}" if from
+    path += "&endTimestamp=#{to}" if to
+    json = get(path)
+
+    return unless json && json['artisttracks']
+
+    json['artisttracks']
+  end
+
   # http://www.last.fm/api/show/user.getWeeklyArtistChart
   def weekly_artists(user, from:, to:)
     path = get_path(method: 'user.getweeklyartistchart', user: user) +
@@ -29,8 +42,11 @@ class LastfmApi < Fetcher
 
   private
 
+  def escape(str)
+    URI.escape(str, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+  end
+
   def get_path(method:, user:)
-    user_param = URI.escape(user, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-    "?method=#{method}&user=#{user_param}&api_key=#{ENV['LASTFM_API_KEY']}&format=json"
+    "?method=#{method}&user=#{escape(user)}&api_key=#{ENV['LASTFM_API_KEY']}&format=json"
   end
 end
