@@ -7,9 +7,14 @@
 }
 
 .button .fa {
-  font-size: inherit;
+  font-size: 0.8em;
+  vertical-align: baseline;
 
   &:after {
     content: "\a0";
   }
+}
+
+a .fa {
+  font-size: inherit;
 }

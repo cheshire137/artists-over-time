@@ -47,12 +47,16 @@
   padding-bottom: 0.25rem;
 }
 
-.artist-link {
+.button.artist-name-button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
   width: 100%;
+  text-align: right;
+  height: auto;
+  padding-top: 0.25em;
+  text-decoration: none;
 }
 
 .artists-chart-title.subtitle:not(:last-child) {
@@ -78,4 +82,35 @@
   display: inline-block;
   vertical-align: middle;
   margin: 0 5px 3px 5px;
+}
+
+.artist-external-link {
+  font-size: 0.9em;
+  position: absolute;
+  right: 0;
+  top: 0.4em;
+  display: block;
+
+  .fa {
+    font-size: inherit;
+  }
+}
+
+.track-image {
+  border-radius: 4px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.artist-list-item {
+  position: relative;
+}
+
+.content ul.tracks-list {
+  margin-bottom: 1.75rem;
+}
+
+.artist-chart-columns {
+  margin-bottom: 0;
 }

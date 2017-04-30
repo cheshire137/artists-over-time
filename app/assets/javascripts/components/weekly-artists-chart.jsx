@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 
 import AppApi from '../models/app-api'
 
+import ArtistTracks from './artist-tracks.jsx'
 import ChartControls from './chart-controls.jsx'
 
 class WeeklyArtistsChart extends React.Component {
@@ -117,6 +118,16 @@ class WeeklyArtistsChart extends React.Component {
     )
   }
 
+  areArtistTracksShown(artist) {
+    return this.state[`showArtist${artist.mbid}`]
+  }
+
+  toggleArtistTracks(event, artist) {
+    event.preventDefault()
+    event.target.blur()
+    this.setState({ [`showArtist${artist.mbid}`]: !this.areArtistTracksShown(artist) })
+  }
+
   render() {
     const { artists, fromDate, toDate, percentCutoff,
             allArtists, showControls } = this.state
@@ -154,17 +165,27 @@ class WeeklyArtistsChart extends React.Component {
         <ul className="artists-list">
           {artists.map(artist => {
             const barStyle = { width: `${artist.percent}%` }
+            const isExpanded = this.areArtistTracksShown(artist)
             return (
-              <li key={artist.mbid}>
-                <div className="columns">
-                  <div className="artist-column column has-text-right">
+              <li className="artist-list-item" key={artist.mbid}>
+                <div className="columns artist-chart-columns">
+                  <div className="artist-column is-6 column">
+                    <button
+                      type="button"
+                      title={artist.name}
+                      className="button is-link artist-name-button"
+                      onClick={e => this.toggleArtistTracks(e, artist)}
+                    >
+                      <i className={`fa fa-chevron-${isExpanded ? 'down' : 'right'}`} aria-hidden="true" />
+                      {artist.name}
+                    </button>
                     <a
-                      className="artist-link"
                       href={artist.url}
                       target="_blank"
-                      title={artist.name}
+                      className="artist-external-link"
+                      title="View artist on Last.fm"
                       rel="noopener noreferrer"
-                    >{artist.name}</a>
+                    ><i className="fa fa-link" aria-hidden="true" /></a>
                   </div>
                   <div className="artist-column column has-text-left">
                     <div className="artist-bar-container" style={barStyle}>
@@ -178,6 +199,14 @@ class WeeklyArtistsChart extends React.Component {
                     </span>
                   </div>
                 </div>
+                {isExpanded ? (
+                  <ArtistTracks
+                    artistName={artist.name}
+                    user={this.props.user}
+                    fromDate={fromDate}
+                    toDate={toDate}
+                  />
+                ) : ''}
               </li>
             )
           })}

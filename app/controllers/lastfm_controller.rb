@@ -1,7 +1,5 @@
 class LastfmController < ApplicationController
-  before_filter :require_from
-  before_filter :require_to
-  before_filter :require_user
+  before_action :require_user
 
   def artist_tracks
     return head :bad_request unless params[:artist].present?

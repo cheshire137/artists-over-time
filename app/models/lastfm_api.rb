@@ -13,7 +13,22 @@ class LastfmApi < Fetcher
 
     return unless json && json['artisttracks']
 
-    json['artisttracks']
+    tracks = json['artisttracks']['track']
+
+    counts = {}
+    tracks.each do |track|
+      track['unique-id'] = track['name'] + track['album']['#text']
+      counts[track['unique-id']] ||= 0
+      counts[track['unique-id']] += 1
+    end
+
+    tracks = tracks.uniq { |track| track['unique-id'] }
+
+    tracks.each do |track|
+      track['playcount'] = counts[track['unique-id']]
+    end
+
+    tracks.sort_by { |track| -track['playcount'] }
   end
 
   # http://www.last.fm/api/show/user.getWeeklyArtistChart
