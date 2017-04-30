@@ -3,6 +3,8 @@
 View which artists you listened to each week via your Last.fm
 history.
 
+![Screenshot](https://raw.githubusercontent.com/cheshire137/artists-over-time/master/screenshot.png)
+
 ## How to Develop
 
 You will need Ruby, Rubygems, PostgreSQL, and npm installed.
