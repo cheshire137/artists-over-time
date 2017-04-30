@@ -27,10 +27,14 @@ class AnonHome extends React.Component {
     return (
       <form onSubmit={e => this.onUserFormSubmit(e)}>
         <div className="field">
-          <label className="label">Last.fm user name</label>
+          <label
+            className="label"
+            htmlFor="lastfm-user-name"
+          >Last.fm user name</label>
           <p className="control">
             <input
               autoFocus
+              id="lastfm-user-name"
               type="text"
               className="input is-large"
               placeholder="Last.fm user name"

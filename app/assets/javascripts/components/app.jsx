@@ -1,5 +1,4 @@
 import { Router, IndexRoute, Route, browserHistory } from 'react-router'
-import PropTypes from 'prop-types'
 
 import AppApi from '../models/app-api'
 import LocalStorage from '../models/local-storage'

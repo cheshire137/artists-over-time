@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 
 const AnonLayout = function(props) {
-  const path = props.location.pathname
   return (
     <div className="layout-container">
       <div className="container">
@@ -35,8 +34,7 @@ const AnonLayout = function(props) {
 }
 
 AnonLayout.propTypes = {
-  children: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired
 }
 
 export default AnonLayout

@@ -53,7 +53,7 @@ class ArtistTracks extends React.Component {
                     ) : ''}
                     {track.name}
                   </a>
-                  <small> &middot; {track.playcount} play{track.playcount == 1 ? '' : 's'}</small>
+                  <small> &middot; {track.playcount} play{track.playcount === 1 ? '' : 's'}</small>
                 </li>
               )
             })}

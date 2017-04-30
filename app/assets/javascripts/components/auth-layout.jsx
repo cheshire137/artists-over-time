@@ -14,7 +14,7 @@ class AuthLayout extends React.Component {
 
   render() {
     const { username, avatarUrl, authenticityToken } = this.state
-    const path = this.props.location.pathname
+
     return (
       <div className="layout-container">
         <div className="container">
@@ -23,7 +23,12 @@ class AuthLayout extends React.Component {
               <span
                 className="nav-item"
               >
-                <img src={avatarUrl} className="user-avatar" width="24" />
+                <img
+                  src={avatarUrl}
+                  className="user-avatar"
+                  width="24"
+                  alt=""
+                />
                 {username}
               </span>
               <form
@@ -63,8 +68,7 @@ class AuthLayout extends React.Component {
 }
 
 AuthLayout.propTypes = {
-  children: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired
 }
 
 export default AuthLayout

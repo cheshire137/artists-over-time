@@ -21,9 +21,9 @@ class WeeklyArtistsChart extends React.Component {
   }
 
   static addDaysToDate(date, numDays) {
-    date = new Date(date)
-    const diff = date.getDate() + numDays
-    return new Date(date.setDate(diff))
+    const dateCopy = new Date(date)
+    const diff = dateCopy.getDate() + numDays
+    return new Date(dateCopy.setDate(diff))
   }
 
   static dateToURLParam(date) {
@@ -77,14 +77,9 @@ class WeeklyArtistsChart extends React.Component {
     })
   }
 
-  filterArtists(artists) {
-    const cutoff = this.state.percentCutoff
-    return artists.filter(artist => artist.percent >= cutoff)
-  }
-
-  toggleControls(event) {
-    event.target.blur()
-    this.setState({ showControls: !this.state.showControls })
+  onDateChange(date) {
+    const dateStr = WeeklyArtistsChart.dateToURLParam(date)
+    window.location.href = `${this.props.baseUrl}/${dateStr}`
   }
 
   previousDateLink() {
@@ -123,9 +118,14 @@ class WeeklyArtistsChart extends React.Component {
     return this.state[`showArtist${artist.mbid}`]
   }
 
-  onDateChange(date, opts) {
-    const dateStr = WeeklyArtistsChart.dateToURLParam(date)
-    window.location.href = `${this.props.baseUrl}/${dateStr}`
+  toggleControls(event) {
+    event.target.blur()
+    this.setState({ showControls: !this.state.showControls })
+  }
+
+  filterArtists(artists) {
+    const cutoff = this.state.percentCutoff
+    return artists.filter(artist => artist.percent >= cutoff)
   }
 
   toggleArtistTracks(event, artist) {
@@ -214,7 +214,7 @@ class WeeklyArtistsChart extends React.Component {
                   </div>
                   <div className="artist-column column has-text-left">
                     <div className="artist-bar-container" style={barStyle}>
-                      <span className="artist-bar"></span>
+                      <span className="artist-bar" />
                     </div>
                     <span className="artist-play-count">
                       {artist.playcount}
