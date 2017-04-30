@@ -19,11 +19,23 @@ class WeeklyArtistsChart extends React.Component {
     return new Date()
   }
 
-  // Where Sunday is considered the start
-  static getOneWeekAgo(endOfWeek) {
-    endOfWeek = new Date(endOfWeek)
-    const diff = endOfWeek.getDate() - 7
-    return new Date(endOfWeek.setDate(diff))
+  static addDaysToDate(date, numDays) {
+    date = new Date(date)
+    const diff = date.getDate() + numDays
+    return new Date(date.setDate(diff))
+  }
+
+  static dateToURLParam(date) {
+    const year = date.getFullYear()
+    let month = date.getMonth() + 1
+    if (month < 10) {
+      month = `0${month}`
+    }
+    let day = date.getDate()
+    if (day < 10) {
+      day = `0${day}`
+    }
+    return `${year}-${month}-${day}`
   }
 
   constructor(props) {
@@ -35,7 +47,7 @@ class WeeklyArtistsChart extends React.Component {
       allArtists: null,
       artists: null,
       toDate,
-      fromDate: WeeklyArtistsChart.getOneWeekAgo(toDate),
+      fromDate: WeeklyArtistsChart.addDaysToDate(toDate, -7),
       percentCutoff: 2,
       showControls: false
     }
@@ -76,21 +88,32 @@ class WeeklyArtistsChart extends React.Component {
   previousDateLink() {
     const { fromDate } = this.state
     const { baseUrl } = this.props
-    const year = fromDate.getFullYear()
-    let month = fromDate.getMonth() + 1
-    if (month < 10) {
-      month = `0${month}`
-    }
-    let day = fromDate.getDate()
-    if (day < 10) {
-      day = `0${day}`
-    }
-    const dateStr = `${year}-${month}-${day}`
+    const dateStr = WeeklyArtistsChart.dateToURLParam(fromDate)
     return (
       <a
         className="change-week-link"
         href={`${baseUrl}/${dateStr}`}
       ><i className="fa fa-angle-left" aria-hidden="true" /></a>
+    )
+  }
+
+  nextDateLink() {
+    const { toDate } = this.state
+    const today = new Date()
+    const toDateStr = WeeklyArtistsChart.dateToURLParam(toDate)
+    const todayStr = WeeklyArtistsChart.dateToURLParam(today)
+    if (toDateStr === todayStr) {
+      return null
+    }
+
+    const { baseUrl } = this.props
+    const newToDate = WeeklyArtistsChart.addDaysToDate(toDate, 7)
+    const dateStr = WeeklyArtistsChart.dateToURLParam(newToDate)
+    return (
+      <a
+        className="change-week-link"
+        href={`${baseUrl}/${dateStr}`}
+      ><i className="fa fa-angle-right" aria-hidden="true" /></a>
     )
   }
 
@@ -107,6 +130,7 @@ class WeeklyArtistsChart extends React.Component {
         <h4 className="subtitle is-6 pull-right">
           {this.previousDateLink()}
           {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
+          {this.nextDateLink()}
         </h4>
         <h3 className="artists-chart-title subtitle is-4">
           Artists for <strong> {this.props.user}</strong>
