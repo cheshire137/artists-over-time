@@ -38,7 +38,7 @@ function requireAuth(nextState, replace, callback) {
 }
 
 function redirectIfSignedIn(nextState, replace, callback) {
-  const newPath = `/user${nextState.location.pathname}`
+  const newPath = `/lastfm${nextState.location.pathname}`
 
   if (LocalStorage.has('username')) {
     const username = LocalStorage.get('username')
@@ -71,8 +71,10 @@ const App = function() {
     <Router history={browserHistory}>
       <Route path="/" component={AnonLayout} onEnter={redirectIfSignedIn}>
         <IndexRoute component={AnonHome} />
+        <Route path="/user/:username" component={AnonHome} />
+        <Route path="/user/:username/:dateStr" component={AnonHome} />
       </Route>
-      <Route path="/user" component={AuthLayout} onEnter={requireAuth}>
+      <Route path="/lastfm" component={AuthLayout} onEnter={requireAuth}>
         <IndexRoute component={AuthHome} />
         <Route path=":dateStr" component={AuthHome} />
       </Route>

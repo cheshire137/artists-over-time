@@ -17,7 +17,7 @@ class AuthHome extends React.Component {
           <div className="column is-6 is-offset-3">
             <WeeklyArtistsChart
               user={this.state.username}
-              baseUrl="/user"
+              baseUrl="/lastfm"
               dateStr={this.props.params.dateStr}
             />
           </div>

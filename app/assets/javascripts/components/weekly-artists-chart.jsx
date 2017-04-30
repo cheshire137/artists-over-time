@@ -30,7 +30,6 @@ class WeeklyArtistsChart extends React.Component {
     super(props)
 
     const toDate = WeeklyArtistsChart.parseDate(props.dateStr)
-    console.log(toDate)
 
     this.state = {
       allArtists: null,

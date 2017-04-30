@@ -5,12 +5,18 @@ import WeeklyArtistsChart from './weekly-artists-chart.jsx'
 class AnonHome extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { user: '', showChart: false }
+    const user = props.params.username || ''
+    this.state = {
+      user,
+      showChart: user && user.length > 0
+    }
   }
 
   onUserFormSubmit(event) {
     event.preventDefault()
-    this.setState({ showChart: true })
+    this.setState({ showChart: true }, () => {
+      this.props.router.push(`/user/${encodeURIComponent(this.state.user)}`)
+    })
   }
 
   onUserChange(event) {
@@ -45,14 +51,18 @@ class AnonHome extends React.Component {
 
     return (
       <section className="section">
-        <div id="chart-container">
-          {showChart ? (
-            <WeeklyArtistsChart
-              user={user}
-              baseUrl=""
-              dateStr={this.props.params.dateStr}
-            />
-          ) : this.userForm()}
+        <div className="columns">
+          <div className="column is-6 is-offset-3">
+            <div id="chart-container">
+              {showChart ? (
+                <WeeklyArtistsChart
+                  user={user}
+                  baseUrl={`/user/${encodeURIComponent(user)}`}
+                  dateStr={this.props.params.dateStr}
+                />
+              ) : this.userForm()}
+            </div>
+          </div>
         </div>
       </section>
     )
@@ -60,7 +70,8 @@ class AnonHome extends React.Component {
 }
 
 AnonHome.propTypes = {
-  params: PropTypes.object
+  params: PropTypes.object,
+  router: PropTypes.object.isRequired
 }
 
 export default AnonHome
