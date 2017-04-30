@@ -47,7 +47,11 @@ class AnonHome extends React.Component {
       <section className="section">
         <div id="chart-container">
           {showChart ? (
-            <WeeklyArtistsChart user={user} />
+            <WeeklyArtistsChart
+              user={user}
+              baseUrl=""
+              dateStr={this.props.params.dateStr}
+            />
           ) : this.userForm()}
         </div>
       </section>
@@ -56,6 +60,7 @@ class AnonHome extends React.Component {
 }
 
 AnonHome.propTypes = {
+  params: PropTypes.object
 }
 
 export default AnonHome

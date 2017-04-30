@@ -6,25 +6,40 @@ import AppApi from '../models/app-api'
 import ChartControls from './chart-controls.jsx'
 
 class WeeklyArtistsChart extends React.Component {
+  static parseDate(dateStr) {
+    if (dateStr && dateStr.length > 0) {
+      const parts = dateStr.split('-')
+      const year = parseInt(parts[0], 10)
+      const month = parseInt(parts[1], 10)
+      const day = parseInt(parts[2], 10)
+
+      return new Date(year, month - 1, day)
+    }
+
+    return new Date()
+  }
+
+  // Where Sunday is considered the start
+  static getOneWeekAgo(endOfWeek) {
+    endOfWeek = new Date(endOfWeek)
+    const diff = endOfWeek.getDate() - 7
+    return new Date(endOfWeek.setDate(diff))
+  }
+
   constructor(props) {
     super(props)
-    const toDate = new Date()
+
+    const toDate = WeeklyArtistsChart.parseDate(props.dateStr)
+    console.log(toDate)
+
     this.state = {
       allArtists: null,
       artists: null,
       toDate,
-      fromDate: this.getStartOfWeek(toDate),
+      fromDate: WeeklyArtistsChart.getOneWeekAgo(toDate),
       percentCutoff: 2,
       showControls: false
     }
-  }
-
-  // Where Sunday is considered the start
-  getStartOfWeek(endOfWeek) {
-    endOfWeek = new Date(endOfWeek)
-    const day = endOfWeek.getDay()
-    const diff = endOfWeek.getDate() - day + (day === 0 ? -6 : 0)
-    return new Date(endOfWeek.setDate(diff))
   }
 
   componentDidMount() {
@@ -59,6 +74,27 @@ class WeeklyArtistsChart extends React.Component {
     this.setState({ showControls: !this.state.showControls })
   }
 
+  previousDateLink() {
+    const { fromDate } = this.state
+    const { baseUrl } = this.props
+    const year = fromDate.getFullYear()
+    let month = fromDate.getMonth() + 1
+    if (month < 10) {
+      month = `0${month}`
+    }
+    let day = fromDate.getDate()
+    if (day < 10) {
+      day = `0${day}`
+    }
+    const dateStr = `${year}-${month}-${day}`
+    return (
+      <a
+        className="change-week-link"
+        href={`${baseUrl}/${dateStr}`}
+      ><i className="fa fa-angle-left" aria-hidden="true" /></a>
+    )
+  }
+
   render() {
     const { artists, fromDate, toDate, percentCutoff,
             allArtists, showControls } = this.state
@@ -70,6 +106,7 @@ class WeeklyArtistsChart extends React.Component {
     return (
       <div className="content">
         <h4 className="subtitle is-6 pull-right">
+          {this.previousDateLink()}
           {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
         </h4>
         <h3 className="artists-chart-title subtitle is-4">
@@ -128,7 +165,9 @@ class WeeklyArtistsChart extends React.Component {
 }
 
 WeeklyArtistsChart.propTypes = {
-  user: PropTypes.string.isRequired
+  user: PropTypes.string.isRequired,
+  baseUrl: PropTypes.string.isRequired,
+  dateStr: PropTypes.string
 }
 
 export default WeeklyArtistsChart

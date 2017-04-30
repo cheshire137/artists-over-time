@@ -74,6 +74,7 @@ const App = function() {
       </Route>
       <Route path="/user" component={AuthLayout} onEnter={requireAuth}>
         <IndexRoute component={AuthHome} />
+        <Route path=":dateStr" component={AuthHome} />
       </Route>
       <Route path="*" component={NotFound} />
     </Router>

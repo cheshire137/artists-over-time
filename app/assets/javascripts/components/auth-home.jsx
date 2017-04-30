@@ -15,7 +15,11 @@ class AuthHome extends React.Component {
       <section className="section">
         <div className="columns">
           <div className="column is-6 is-offset-3">
-            <WeeklyArtistsChart user={this.state.username} />
+            <WeeklyArtistsChart
+              user={this.state.username}
+              baseUrl="/user"
+              dateStr={this.props.params.dateStr}
+            />
           </div>
         </div>
       </section>
@@ -24,6 +28,7 @@ class AuthHome extends React.Component {
 }
 
 AuthHome.propTypes = {
+  params: PropTypes.object
 }
 
 export default AuthHome
