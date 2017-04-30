@@ -1,0 +1,5 @@
+export RACK_ENV=development
+export PORT=3000
+export LASTFM_API_KEY=value
+export LASTFM_API_SECRET=value
+export LASTFM_APP_HOST=http://localhost:3000

@@ -1,0 +1,56 @@
+.content ul.artists-list {
+  list-style: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.artist-bar-container,
+.artist-percent,
+.artist-play-count {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.artist-bar-container {
+  position: relative;
+  margin-right: 10px;
+}
+
+.artist-bar {
+  @include display-flex;
+  background-color: #3273dc;
+  height: 9px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.artist-percent,
+.artist-play-count {
+  font-size: 0.8em;
+}
+
+.artist-percent {
+  &:before,
+  &:after {
+    content: "\a0";
+  }
+}
+
+.artist-play-count{
+  &:after {
+    content: "\a0\b7";
+  }
+}
+
+.column.artist-column {
+  padding-top: 0;
+  padding-bottom: 0.25rem;
+}
+
+.artist-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 100%;
+}
