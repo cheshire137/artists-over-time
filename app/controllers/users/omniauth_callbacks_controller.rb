@@ -7,7 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user.lastfm_uid = auth.uid
     user.lastfm_url = auth.extra.raw_info.url
 
-    if image = auth.extra.raw_info.image.detect { |img| img.size == 'large' }
+    if image = auth.extra.raw_info.image.detect { |img| img['size'] == 'large' }
       user.avatar_url = image['#text']
     end
 
