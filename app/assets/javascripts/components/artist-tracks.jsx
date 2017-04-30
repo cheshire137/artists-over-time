@@ -35,7 +35,7 @@ class ArtistTracks extends React.Component {
 
     return (
       <div className="columns">
-        <div className="column is-10 is-offset-1">
+        <div className="track-column column is-10 is-offset-1">
           <ul className="tracks-list has-text-left">
             {tracks.map(track => {
               return (

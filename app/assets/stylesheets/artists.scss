@@ -47,6 +47,10 @@
   padding-bottom: 0.25rem;
 }
 
+.column.track-column {
+  padding-top: 0;
+}
+
 .button.artist-name-button {
   white-space: nowrap;
   overflow: hidden;
@@ -56,7 +60,13 @@
   text-align: right;
   height: auto;
   padding-top: 0.25em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
   text-decoration: none;
+
+  .fa.fa-chevron-right {
+    top: -0.07em;
+  }
 }
 
 .artists-chart-title.subtitle:not(:last-child) {

@@ -18,3 +18,19 @@
 a .fa {
   font-size: inherit;
 }
+
+.fa.fa-chevron-down {
+  position: relative;
+  top: -0.2em;
+}
+
+.fa.fa-chevron-right {
+  position: relative;
+  top: 0.1em;
+}
+
+.fa.fa-angle-left,
+.fa.fa-angle-right {
+  position: relative;
+  top: 0.05em;
+}
