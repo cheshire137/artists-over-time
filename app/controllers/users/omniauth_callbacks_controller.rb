@@ -1,10 +1,15 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def lastfm
     auth = request.env['omniauth.auth']
-    raise auth.inspect
-    user = User.where(email: auth.info.email).first_or_initialize
-    user.foursquare_access_token = auth.credentials.token
-    user.foursquare_uid = auth.uid
+
+    user = User.where(username: auth.credentials.name).first_or_initialize
+    user.lastfm_access_token = auth.credentials.token
+    user.lastfm_uid = auth.uid
+    user.lastfm_url = auth.extra.raw_info.url
+
+    if image = auth.extra.raw_info.image.detect { |img| img.size == 'large' }
+      user.avatar_url = image['#text']
+    end
 
     if user.new_record?
       user.password = Devise.friendly_token[0, 20]

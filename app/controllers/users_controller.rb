@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       render json: {
         user: {
           auth: false,
-          email: nil,
+          username: nil,
           authenticityToken: form_authenticity_token
         }
       }

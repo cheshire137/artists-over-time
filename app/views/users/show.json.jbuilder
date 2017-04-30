@@ -1,6 +1,7 @@
 json.user do
   json.auth true
-  json.email @user.email
+  json.username @user.username
+  json.lastfmUrl @user.lastfm_url
+  json.avatarUrl @user.avatar_url
   json.authenticityToken form_authenticity_token
-  json.isFitbitAuthenticated @user.authenticated_with_fitbit?
 end

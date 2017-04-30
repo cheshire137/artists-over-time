@@ -12,12 +12,12 @@ import NotFound from './not-found.jsx'
 
 function storeUserData(json) {
   LocalStorage.set('authenticity-token', json.authenticityToken)
-  LocalStorage.set('email', json.email)
+  LocalStorage.set('username', json.username)
 }
 
 function clearUserData() {
   LocalStorage.delete('authenticity-token')
-  LocalStorage.delete('email')
+  LocalStorage.delete('username')
 }
 
 function requireAuth(nextState, replace, callback) {
@@ -38,9 +38,9 @@ function requireAuth(nextState, replace, callback) {
 function redirectIfSignedIn(nextState, replace, callback) {
   const newPath = `/user${nextState.location.pathname}`
 
-  if (LocalStorage.has('email')) {
-    const email = LocalStorage.get('email')
-    if (email && email.length > 0) {
+  if (LocalStorage.has('username')) {
+    const username = LocalStorage.get('username')
+    if (username && username.length > 0) {
       replace({
         pathname: newPath,
         state: { nextPathname: nextState.location.pathname }

@@ -6,7 +6,7 @@ class AuthLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: LocalStorage.get('email'),
+      username: LocalStorage.get('username'),
       authenticityToken: LocalStorage.get('authenticity-token')
     }
   }
@@ -20,7 +20,7 @@ class AuthLayout extends React.Component {
             <div className="nav-right">
               <span
                 className="nav-item"
-              >{this.state.email}</span>
+              >{this.state.username}</span>
               <form
                 action="/users/sign_out"
                 method="post"
