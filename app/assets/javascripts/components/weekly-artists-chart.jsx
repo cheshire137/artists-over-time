@@ -24,8 +24,8 @@ class WeeklyArtistsChart extends React.Component {
 
   componentDidMount() {
     const { fromDate, toDate } = this.state
+
     const api = new AppApi()
-    console.log(fromDate, toDate)
     api.getLastfmWeeklyArtists(this.props.user, fromDate, toDate).
         then(artists => this.onArtistsLoaded(artists)).
         catch(err => console.error('failed to load artists', err))
