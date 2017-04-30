@@ -70,3 +70,6 @@ gem 'react-rails', '~> 1.10.0'
 
 gem 'compass-rails', '~> 3.0.2'
 gem "bulma-rails", "~> 0.4.0"
+
+# Font library for icons
+gem 'font-awesome-rails', '~> 4.7.0.1'

@@ -1,0 +1,15 @@
+.subtitle .button.is-link {
+  text-decoration: none;
+  font-size: inherit;
+  height: auto;
+  vertical-align: middle;
+  padding: 0 0.1em;
+}
+
+.button .fa {
+  font-size: inherit;
+
+  &:after {
+    content: "\a0";
+  }
+}

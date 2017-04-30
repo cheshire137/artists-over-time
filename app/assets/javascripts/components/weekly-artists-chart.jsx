@@ -14,7 +14,8 @@ class WeeklyArtistsChart extends React.Component {
       artists: null,
       toDate,
       fromDate: this.getStartOfWeek(toDate),
-      percentCutoff: 2
+      percentCutoff: 2,
+      showControls: false
     }
   }
 
@@ -53,8 +54,14 @@ class WeeklyArtistsChart extends React.Component {
     return artists.filter(artist => artist.percent >= cutoff)
   }
 
+  toggleControls(event) {
+    event.target.blur()
+    this.setState({ showControls: !this.state.showControls })
+  }
+
   render() {
-    const { artists, fromDate, toDate, percentCutoff, allArtists } = this.state
+    const { artists, fromDate, toDate, percentCutoff,
+            allArtists, showControls } = this.state
 
     if (!artists) {
       return <p>Loading...</p>
@@ -62,18 +69,28 @@ class WeeklyArtistsChart extends React.Component {
 
     return (
       <div className="content">
+        <h4 className="subtitle is-6 pull-right">
+          {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
+        </h4>
         <h3 className="artists-chart-title subtitle is-4">
           Artists for <strong> {this.props.user}</strong>
         </h3>
         <h4 className="subtitle is-6">
-          {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
-          <span> &middot; {artists.length} artist{artists.length === 1 ? '' : 's'} of</span>
-          <span> {allArtists.length}</span>
+          <button
+            type="button"
+            className="button is-link"
+            onClick={e => this.toggleControls(e)}
+          >
+            <i className={`fa ${showControls ? 'fa-chevron-down' : 'fa-chevron-right'}`} aria-hidden="true" />
+            <span>{artists.length} / {allArtists.length} artist{allArtists.length === 1 ? '' : 's'}</span>
+          </button>
         </h4>
-        <ChartControls
-          percentCutoff={percentCutoff}
-          onPercentCutoffChange={value => this.onPercentCutoffChange(value)}
-        />
+        {showControls ? (
+          <ChartControls
+            percentCutoff={percentCutoff}
+            onPercentCutoffChange={value => this.onPercentCutoffChange(value)}
+          />
+        ) : ''}
         <ul className="artists-list">
           {artists.map(artist => {
             const barStyle = { width: `${artist.percent}%` }

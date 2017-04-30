@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 
 class ChartControls extends React.Component {
   onPercentCutoffChange(event) {
-    this.props.onPercentCutoffChange(event.target.value)
+    const percentCutoff = parseInt(event.target.value, 10)
+    this.props.onPercentCutoffChange(percentCutoff)
   }
 
   render() {
