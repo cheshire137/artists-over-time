@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 
 import AppApi from '../models/app-api'
-
-import ChartControls from './chart-controls.jsx'
 
 class ArtistTracks extends React.Component {
   constructor(props) {
@@ -38,6 +35,7 @@ class ArtistTracks extends React.Component {
           <ul className="tracks-list has-text-left">
             {tracks.map(track => {
               const imageUrl = track.image[0]['#text']
+
               return (
                 <li key={track.date.uts}>
                   <a
