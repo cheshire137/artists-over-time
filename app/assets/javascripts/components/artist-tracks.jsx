@@ -37,6 +37,7 @@ class ArtistTracks extends React.Component {
         <div className="track-column column is-10 is-offset-1">
           <ul className="tracks-list has-text-left">
             {tracks.map(track => {
+              const imageUrl = track.image[0]['#text']
               return (
                 <li key={track.date.uts}>
                   <a
@@ -44,12 +45,14 @@ class ArtistTracks extends React.Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img
-                      src={track.image[0]['#text']}
-                      className="track-image"
-                      width="24"
-                      alt=""
-                    />
+                    {imageUrl && imageUrl.length > 0 ? (
+                      <img
+                        src={imageUrl}
+                        className="track-image"
+                        width="24"
+                        alt=""
+                      />
+                    ) : ''}
                     {track.name}
                   </a>
                   <small> &middot; {track.playcount} play{track.playcount == 1 ? '' : 's'}</small>
