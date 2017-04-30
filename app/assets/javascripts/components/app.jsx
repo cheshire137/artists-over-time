@@ -13,11 +13,13 @@ import NotFound from './not-found.jsx'
 function storeUserData(json) {
   LocalStorage.set('authenticity-token', json.authenticityToken)
   LocalStorage.set('username', json.username)
+  LocalStorage.set('avatarUrl', json.avatarUrl)
 }
 
 function clearUserData() {
   LocalStorage.delete('authenticity-token')
   LocalStorage.delete('username')
+  LocalStorage.delete('avatarUrl')
 }
 
 function requireAuth(nextState, replace, callback) {
