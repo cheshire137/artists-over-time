@@ -3,14 +3,18 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 
 import AppApi from '../models/app-api'
 
+import ChartControls from './chart-controls.jsx'
+
 class WeeklyArtistsChart extends React.Component {
   constructor(props) {
     super(props)
     const toDate = new Date()
     this.state = {
+      allArtists: null,
       artists: null,
       toDate,
-      fromDate: this.getStartOfWeek(toDate)
+      fromDate: this.getStartOfWeek(toDate),
+      percentCutoff: 2
     }
   }
 
@@ -32,11 +36,25 @@ class WeeklyArtistsChart extends React.Component {
   }
 
   onArtistsLoaded(artists) {
-    this.setState({ artists })
+    this.setState({
+      allArtists: artists,
+      artists: this.filterArtists(artists)
+    })
+  }
+
+  onPercentCutoffChange(percentCutoff) {
+    this.setState({ percentCutoff }, () => {
+      this.setState({ artists: this.filterArtists(this.state.allArtists) })
+    })
+  }
+
+  filterArtists(artists) {
+    const cutoff = this.state.percentCutoff
+    return artists.filter(artist => artist.percent >= cutoff)
   }
 
   render() {
-    const { artists, fromDate, toDate } = this.state
+    const { artists, fromDate, toDate, percentCutoff, allArtists } = this.state
 
     if (!artists) {
       return <p>Loading...</p>
@@ -44,17 +62,25 @@ class WeeklyArtistsChart extends React.Component {
 
     return (
       <div className="content">
-        <h3 className="subtitle is-4">
-          Artists from {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
-          <small> &middot; {artists.length} play{artists.length === 1 ? '' : 's'}</small>
+        <h3 className="artists-chart-title subtitle is-4">
+          Artists for <strong> {this.props.user}</strong>
         </h3>
+        <h4 className="subtitle is-6">
+          {fromDate.toLocaleDateString()} - {toDate.toLocaleDateString()}
+          <span> &middot; {artists.length} artist{artists.length === 1 ? '' : 's'} of</span>
+          <span> {allArtists.length}</span>
+        </h4>
+        <ChartControls
+          percentCutoff={percentCutoff}
+          onPercentCutoffChange={value => this.onPercentCutoffChange(value)}
+        />
         <ul className="artists-list">
           {artists.map(artist => {
             const barStyle = { width: `${artist.percent}%` }
             return (
               <li key={artist.mbid}>
                 <div className="columns">
-                  <div className="artist-column column is-3">
+                  <div className="artist-column column has-text-right">
                     <a
                       className="artist-link"
                       href={artist.url}
@@ -63,7 +89,7 @@ class WeeklyArtistsChart extends React.Component {
                       rel="noopener noreferrer"
                     >{artist.name}</a>
                   </div>
-                  <div className="artist-column column">
+                  <div className="artist-column column has-text-left">
                     <div className="artist-bar-container" style={barStyle}>
                       <span className="artist-bar"></span>
                     </div>

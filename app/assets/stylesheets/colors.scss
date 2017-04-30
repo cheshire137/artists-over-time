@@ -1,0 +1,35 @@
+$white: #FEFFFF;
+$link-color: #3258AD;
+$visited-link-color: $link-color;
+$link-hover-color: #791D42;
+$subtle-text: #555;
+$hero-text-color: #222;
+
+body {
+  background-color: $white;
+}
+
+a, a:link {
+  color: $link-color;
+}
+
+a:visited, a:active {
+  color: $visited-link-color;
+}
+
+a:hover, a:focus {
+  color: $link-hover-color;
+}
+
+.subtitle.is-6 {
+  color: $subtle-text;
+}
+
+.hero.is-primary {
+  background-color: #E9C823;
+
+  .title,
+  .subtitle {
+    color: $hero-text-color;
+  }
+}
