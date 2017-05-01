@@ -250,6 +250,9 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :lastfm, ENV['LASTFM_API_KEY'], ENV['LASTFM_API_SECRET'],
     callback_url: "#{ENV['LASTFM_APP_HOST']}/users/auth/lastfm/callback"
+  config.omniauth :spotify, ENV['SPOTIFY_API_KEY'], ENV['SPOTIFY_API_SECRET'],
+    callback_url: "#{ENV['LASTFM_APP_HOST']}/users/auth/spotify/callback",
+    scope: 'playlist-modify-public user-read-email'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

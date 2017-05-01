@@ -1,4 +1,21 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  before_action :authenticate_user!, only: [:spotify]
+
+  def spotify
+    auth = request.env['omniauth.auth']
+
+    current_user.spotify_refresh_token = auth.credentials.refresh_token
+    current_user.spotify_access_token = auth.credentials.token
+    current_user.email = auth.extra.raw_info.email
+    current_user.spotify_uid = auth.extra.raw_info.id
+
+    unless current_user.save
+      flash[:error] = "Failed to sign in with Spotify: #{user.errors.full_messages.join(', ')}"
+    end
+
+    redirect_to root_path
+  end
+
   def lastfm
     auth = request.env['omniauth.auth']
 

@@ -62,6 +62,7 @@ gem 'devise', '~> 4.2.0'
 
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-lastfm', '~> 0.0.7'
+gem 'omniauth-spotify', '~> 0.0.13'
 
 # CommonJS so we can do require
 gem 'browserify-rails', '~> 4.1.0'

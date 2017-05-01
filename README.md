@@ -18,7 +18,8 @@ cp dotenv.sample .env
 
 Create a [Last.fm app](http://www.last.fm/api/account/create) with
 `http://localhost:3000/users/auth/lastfm/callback` as a callback
-URL. Modify .env with your values.
+URL. Create a [Spotify app](https://developer.spotify.com/my-applications/)
+with `http://localhost:3000/users/auth/spotify/callback` as a callback URL. Modify .env with your values.
 
 ```bash
 bundle exec rails s
@@ -40,6 +41,10 @@ bundle exec rspec # to run Rails tests
 Create an [Heroku app](https://dashboard.heroku.com/apps).
 Create [another Last.fm app](https://www.last.fm/api/account/create)
 with the callback URL `https://your-heroku-app.herokuapp.com/users/auth/lastfm/callback`.
+Modify your Spotify app to include
+`https://your-heroku-app.herokuapp.com/users/auth/spotify/callback` and
+`http://your-heroku-app.herokuapp.com/users/auth/spotify/callback`
+as callback URLs.
 
 ```bash
 heroku git:remote -a your-heroku-app

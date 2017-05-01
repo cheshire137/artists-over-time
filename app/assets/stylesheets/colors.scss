@@ -33,3 +33,14 @@ a:hover, a:focus {
     color: $hero-text-color;
   }
 }
+
+.button.is-spotify {
+  @include transition(all 0.1s ease-in-out);
+  background-color: #57b660;
+  border-color: transparent;
+  color: #fff;
+
+  &:hover, &:focus {
+    background-color: #5bbe63;
+  }
+}

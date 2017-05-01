@@ -12,17 +12,11 @@ class AuthHome extends React.Component {
 
   render() {
     return (
-      <section className="section">
-        <div className="columns">
-          <div className="column is-6 is-offset-3">
-            <WeeklyArtistsChart
-              user={this.state.username}
-              baseUrl="/lastfm"
-              dateStr={this.props.params.dateStr}
-            />
-          </div>
-        </div>
-      </section>
+      <WeeklyArtistsChart
+        user={this.state.username}
+        baseUrl="/lastfm"
+        dateStr={this.props.params.dateStr}
+      />
     )
   }
 }

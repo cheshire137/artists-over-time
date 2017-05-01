@@ -8,7 +8,8 @@ class UsersController < ApplicationController
         user: {
           auth: false,
           username: nil,
-          authenticityToken: form_authenticity_token
+          authenticityToken: form_authenticity_token,
+          spotifyUser: nil
         }
       }
     end

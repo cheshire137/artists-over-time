@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :trackable, :validatable, :rememberable,
     authentication_keys: [:username]
 
-  devise :omniauthable, omniauth_providers: [:lastfm]
+  devise :omniauthable, omniauth_providers: [:lastfm, :spotify]
 
   alias_attribute :to_s, :username
 
@@ -16,7 +16,15 @@ class User < ApplicationRecord
     false
   end
 
-  def email_changed?
-    false
+  # Updates the Spotify access and refresh tokens for the given User.
+  # Returns true on success, false or nil on error.
+  def update_spotify_tokens
+    tokens = SpotifyApi.refresh_tokens(spotify_refresh_token)
+
+    if tokens
+      self.spotify_access_token = tokens['access_token']
+      self.spotify_refresh_token = tokens['refresh_token']
+      save
+    end
   end
 end

@@ -8,12 +8,14 @@ class AuthLayout extends React.Component {
     this.state = {
       username: LocalStorage.get('username'),
       avatarUrl: LocalStorage.get('avatarUrl'),
-      authenticityToken: LocalStorage.get('authenticity-token')
+      authenticityToken: LocalStorage.get('authenticity-token'),
+      spotifyUser: LocalStorage.get('spotifyUser')
     }
   }
 
   render() {
-    const { username, avatarUrl, authenticityToken } = this.state
+    const { username, avatarUrl, authenticityToken,
+            spotifyUser } = this.state
 
     return (
       <div className="layout-container">
@@ -60,7 +62,23 @@ class AuthLayout extends React.Component {
           </div>
         </section>
         <div className="layout-children-container">
-          {this.props.children}
+          <section className="section">
+            <div className="columns">
+              <div className="column is-8">
+                {this.props.children}
+              </div>
+              <div className="column is-4">
+                {spotifyUser && spotifyUser.length > 0 ? (
+                  <p>Signed in as <strong>{spotifyUser}</strong> on Spotify.</p>
+                ) : (
+                  <a
+                    className="button is-spotify"
+                    href="/users/auth/spotify"
+                  >Sign in with Spotify</a>
+                )}
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     )

@@ -69,6 +69,10 @@
   }
 }
 
+.content h3.artists-chart-title:not(:first-child) {
+  margin-top: 0;
+}
+
 .artists-chart-title.subtitle:not(:last-child) {
   margin-bottom: 0.3em;
 }
