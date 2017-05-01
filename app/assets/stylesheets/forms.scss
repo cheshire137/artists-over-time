@@ -99,3 +99,22 @@ input[type="range"]:focus::-ms-fill-lower {
 input[type="range"]:focus::-ms-fill-upper {
   background: #E9C823;
 }
+
+.button.is-flush.is-link {
+  padding-left: 0;
+  padding-right: 0;
+  color: $link-color;
+  text-decoration: none;
+
+  &:active {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    text-decoration: underline;
+    color: $link-hover-color;
+  }
+}

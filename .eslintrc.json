@@ -29,7 +29,7 @@
     "rules": {
         "semi": [2, "never"],
         "dot-location": [2, "object"],
-        "no-console": [2, { "allow": ["error"] }],
+        "no-console": [2, { "allow": ["error", "confirm"] }],
         "no-multi-assign": 0,
         "comma-dangle": [2, { "arrays": "never" }],
         "import/extensions": 0,

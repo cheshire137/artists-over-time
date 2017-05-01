@@ -10,7 +10,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     current_user.spotify_uid = auth.extra.raw_info.id
 
     unless current_user.save
-      flash[:error] = "Failed to sign in with Spotify: #{user.errors.full_messages.join(', ')}"
+      flash[:error] = 'Failed to sign in with Spotify: ' +
+        current_user.errors.full_messages.join(', ')
     end
 
     redirect_to root_path

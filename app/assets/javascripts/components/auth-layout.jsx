@@ -13,6 +13,14 @@ class AuthLayout extends React.Component {
     }
   }
 
+  confirmSpotifyDisconnect(event) {
+    event.target.blur()
+
+    if (!confirm('Are you sure you want to disconnect your Spotify account?')) {
+      event.preventDefault()
+    }
+  }
+
   render() {
     const { username, avatarUrl, authenticityToken,
             spotifyUser } = this.state
@@ -69,7 +77,22 @@ class AuthLayout extends React.Component {
               </div>
               <div className="column is-4">
                 {spotifyUser && spotifyUser.length > 0 ? (
-                  <p>Signed in as <strong>{spotifyUser}</strong> on Spotify.</p>
+                  <p>
+                    Signed in as <strong>{spotifyUser}</strong> on Spotify.
+                    <br />
+                    <form
+                      action="/users/disconnect-spotify"
+                      method="post"
+                    >
+                      <input name="_method" type="hidden" value="delete" />
+                      <input name="authenticity_token" type="hidden" value={authenticityToken} />
+                      <button
+                        type="submit"
+                        className="button is-small is-flush is-link"
+                        onClick={e => this.confirmSpotifyDisconnect(e)}
+                      >Disconnect</button>
+                    </form>
+                  </p>
                 ) : (
                   <a
                     className="button is-spotify"

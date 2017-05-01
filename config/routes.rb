@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get '/lastfm/artist-tracks' => 'lastfm#artist_tracks', as: :lastfm_artist_tracks
   end
 
+  delete '/users/disconnect-spotify' => 'users#disconnect_spotify', as: :disconnect_spotify
+
   root to: 'home#index'
 
   # Catch-all route so React can handle routing
