@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'
 
+import AppApi from '../models/app-api'
 import LocalStorage from '../models/local-storage'
+
+import LastfmFriends from './lastfm-friends.jsx'
 
 class AuthLayout extends React.Component {
   constructor(props) {
@@ -76,10 +79,12 @@ class AuthLayout extends React.Component {
                 {this.props.children}
               </div>
               <div className="column is-4">
+                <LastfmFriends user={username} />
                 {spotifyUser && spotifyUser.length > 0 ? (
-                  <p>
-                    Signed in as <strong>{spotifyUser}</strong> on Spotify.
-                    <br />
+                  <div>
+                    <p>
+                      Signed in as <strong>{spotifyUser}</strong> on Spotify.
+                    </p>
                     <form
                       action="/users/disconnect-spotify"
                       method="post"
@@ -92,7 +97,7 @@ class AuthLayout extends React.Component {
                         onClick={e => this.confirmSpotifyDisconnect(e)}
                       >Disconnect</button>
                     </form>
-                  </p>
+                  </div>
                 ) : (
                   <a
                     className="button is-spotify"

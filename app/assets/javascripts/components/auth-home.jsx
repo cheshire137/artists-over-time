@@ -11,11 +11,14 @@ class AuthHome extends React.Component {
   }
 
   render() {
+    const { params } = this.props
+    const username = params.username || this.state.username
+
     return (
       <WeeklyArtistsChart
-        user={this.state.username}
-        baseUrl="/lastfm"
-        dateStr={this.props.params.dateStr}
+        user={username}
+        baseUrl={`/lastfm/user/${encodeURIComponent(username)}`}
+        dateStr={params.dateStr}
       />
     )
   }

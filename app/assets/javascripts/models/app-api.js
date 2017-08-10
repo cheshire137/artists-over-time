@@ -33,4 +33,10 @@ export default class AppApi extends Fetcher {
     const params = `?user=${userParam}&artist=${artistParam}&from=${fromParam}&to=${toParam}`
     return this.get(`/lastfm/artist-tracks${params}`, this.defaultHeaders)
   }
+
+  getLastfmFriends(user) {
+    const userParam = encodeURIComponent(user)
+    const params = `?user=${userParam}`
+    return this.get(`/lastfm/friends${params}`, this.defaultHeaders)
+  }
 }

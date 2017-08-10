@@ -1,6 +1,16 @@
 class LastfmController < ApplicationController
   before_action :require_user
 
+  def friends
+    api = LastfmApi.new
+    user = params[:user] || current_user.username
+    friends = api.friends(user)
+
+    return head api.response_code unless friends
+
+    render json: friends
+  end
+
   def artist_tracks
     return head :bad_request unless params[:artist].present?
 

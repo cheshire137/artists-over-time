@@ -77,6 +77,7 @@ const App = function() {
       </Route>
       <Route path="/lastfm" component={AuthLayout} onEnter={requireAuth}>
         <IndexRoute component={AuthHome} />
+        <Route path="/user/:username/:dateStr" component={AuthHome} />
         <Route path=":dateStr" component={AuthHome} />
       </Route>
       <Route path="*" component={NotFound} />

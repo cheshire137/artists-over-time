@@ -55,6 +55,17 @@ class LastfmApi < Fetcher
     artists.sort_by { |artist| -artist['playcount'] }
   end
 
+  # http://www.last.fm/api/show/user.getFriends
+  def friends(user)
+    path = get_path(method: 'user.getfriends', user: user) +
+      '&recenttracks=1'
+    json = get(path)
+
+    return unless json && json['friends']
+
+    json['friends']['user']
+  end
+
   private
 
   def escape(str)

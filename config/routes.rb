@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get '/user' => 'users#current', as: :current_user
     get '/lastfm/weekly-artists' => 'lastfm#weekly_artists', as: :lastfm_weekly_artists
     get '/lastfm/artist-tracks' => 'lastfm#artist_tracks', as: :lastfm_artist_tracks
+    get '/lastfm/friends' => 'lastfm#friends', as: :lastfm_friends
   end
 
   delete '/users/disconnect-spotify' => 'users#disconnect_spotify', as: :disconnect_spotify
